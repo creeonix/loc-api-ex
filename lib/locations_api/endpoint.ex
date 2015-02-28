@@ -13,18 +13,18 @@ defmodule LocationsApi.Endpoint do
   plug Phoenix.CodeReloader
 
   plug Plug.Parsers,
-    parsers: [:urlencoded, :multipart, :json],
-    pass: ["*/*"],
+    parsers: [:json],
+    pass: ["application/json"],
     json_decoder: Poison
 
   plug Plug.MethodOverride
   plug Plug.Head
 
-  plug Plug.Session,
-    store: :cookie,
-    key: "_locations_api_key",
-    signing_salt: "ptHsICJM",
-    encryption_salt: "l5U2qSWA"
+  # plug Plug.Session,
+  #   store: :cookie,
+  #   key: "_locations_api_key",
+  #   signing_salt: "ptHsICJM",
+  #   encryption_salt: "l5U2qSWA"
 
   plug :router, LocationsApi.Router
 end

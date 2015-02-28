@@ -1,25 +1,15 @@
 defmodule LocationsApi.Router do
   use Phoenix.Router
 
-  pipeline :browser do
-    plug :accepts, ~w(html)
-    plug :fetch_session
-    plug :fetch_flash
-    plug :protect_from_forgery
-  end
-
   pipeline :api do
     plug :accepts, ~w(json)
   end
 
-  scope "/", LocationsApi do
-    pipe_through :browser # Use the default browser stack
+  scope "/v1/", LocationsApi do
+    pipe_through :api
 
-    get "/", PageController, :index
+    get   "/locations/:uid", LocationsController, :index
+    post  "/locations", LocationsController, :create
   end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", LocationsApi do
-  #   pipe_through :api
-  # end
 end

@@ -25,4 +25,9 @@ defmodule LocationsApi do
     LocationsApi.Endpoint.config_change(changed, removed)
     :ok
   end
+
+end
+
+defimpl Phoenix.HTML.Safe, for: Map do
+  def to_iodata(message), do: Poison.encode_to_iodata!(message)
 end
