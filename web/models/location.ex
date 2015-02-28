@@ -7,7 +7,7 @@ defmodule LocationsApi.Location do
   defstruct uid: nil, lat: nil, lng: nil, address: "", created_at: ""
 
   def find(uid) do
-    client |> hgetall "location:#{uid}:last"
+    new client |> hgetall "location:#{uid}:last"
   end
 
   def new(params = %{}) do
