@@ -2,7 +2,7 @@ defmodule LocationsApi.Location do
   use Exredis.Api
   use Timex
   import LocationsApi.RedisClient, only: [ client: 0 ]
-  alias LocationsApi.Location, as: Location
+  alias LocationsApi.Location
 
   defstruct uid: nil, lat: nil, lng: nil, address: "", created_at: ""
 
@@ -51,8 +51,7 @@ defmodule LocationsApi.Location do
   defp update_last_record(location = %Location{}) do
     [last_timestamp] = client |> hmget("location:#{location.uid}:last", "created_at")
     if last_timestamp == :undefined || _timestamp(last_timestamp) < _timestamp do
-      client
-        |> hmset("location:#{location.uid}:last", to_redis_data(location))
+      client |> hmset("location:#{location.uid}:last", to_redis_data(location))
     end
   end
 

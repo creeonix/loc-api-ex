@@ -4,8 +4,11 @@ defmodule LocationsApi.LocationsController do
   plug :action
 
   def index(conn, %{ "uid" => uid }) do
-    uid = String.replace(uid, ~r/\.json$/, "")
-    location = Map.from_struct LocationsApi.Location.find(uid)
+    location = uid
+      |> String.replace(~r/\.json$/, "")
+      |> LocationsApi.Location.find
+      |> Map.from_struct
+
     json conn, %{ location: location }
   end
 
